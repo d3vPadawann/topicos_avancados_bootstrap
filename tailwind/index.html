@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPass - Carteira de Vacinação Digital para Pets">
+    <title>PetPass - Sua Carteira de Vacinação Digital</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        petpass: {
+                            50: '#E8F5E9',
+                            100: '#C8E6C9',
+                            200: '#A5D6A7',
+                            300: '#81C784',
+                            400: '#66BB6A',
+                            500: '#4CAF50',
+                            600: '#43A047',
+                            700: '#388E3C',
+                            800: '#2E7D32',
+                            900: '#1B5E20',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome for icons (similar to Bootstrap Icons) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .carousel-img { height: 400px; object-fit: cover; }
+        @media (max-width: 768px) {
+            .carousel-img { height: 250px; }
+        }
+        /* Custom scrollbar for carousel indicators */
+        .carousel-indicators button {
+            transition: all 0.3s ease;
+        }
+        /* Modal animations */
+        .modal-overlay {
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
+        /* Form validation styles */
+        .input-error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        .input-valid:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-900">
+    <!-- 1. NAVBAR - Responsive navigation with collapsible menu -->
+    <header>
+        <nav class="fixed top-0 left-0 right-0 z-50 bg-petpass-800 text-white shadow-sm" aria-label="Navegação principal" role="navigation">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <a href="#" class="flex items-center gap-2 text-white font-bold text-xl" aria-label="PetPass - Página inicial">
+                        <i class="fas fa-heart-pulse text-3xl"></i>
+                        <span>PetPass</span>
+                    </a>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex md:items-center md:gap-6">
+                        <a href="#inicio" class="text-white hover:text-petpass-100 transition-colors font-medium" aria-current="page">Início</a>
+                        <a href="#funcionalidades" class="text-white hover:text-petpass-100 transition-colors font-medium">Funcionalidades</a>
+                        <a href="#vacinas" class="text-white hover:text-petpass-100 transition-colors font-medium">Vacinas</a>
+                        <a href="#depoimentos" class="text-white hover:text-petpass-100 transition-colors font-medium">Depoimentos</a>
+                        <a href="#contato" class="text-white hover:text-petpass-100 transition-colors font-medium">Contato</a>
+                        </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" type="button" class="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors" aria-expanded="false" aria-controls="mobileMenu" aria-label="Alternar navegação">
+                        <i class="fas fa-bars text-xl" id="menuIcon"></i>
+                        <i class="fas fa-times text-xl hidden" id="closeIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden bg-petpass-800 border-t border-white/10" role="navigation" aria-label="Menu móvel">
+                <div class="max-w-7xl mx-auto px-4 py-4 space-y-3">
+                    <a href="#inicio" class="block text-white hover:text-petpass-100 font-medium py-2" onclick="closeMobileMenu()">Início</a>
+                    <a href="#funcionalidades" class="block text-white hover:text-petpass-100 font-medium py-2" onclick="closeMobileMenu()">Funcionalidades</a>
+                    <a href="#vacinas" class="block text-white hover:text-petpass-100 font-medium py-2" onclick="closeMobileMenu()">Vacinas</a>
+                    <a href="#depoimentos" class="block text-white hover:text-petpass-100 font-medium py-2" onclick="closeMobileMenu()">Depoimentos</a>
+                    <a href="#contato" class="block text-white hover:text-petpass-100 font-medium py-2" onclick="closeMobileMenu()">Contato</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="inicio" class="hero-gradient text-white pt-32 pb-20 lg:pt-40 lg:pb-28" aria-labelledby="hero-title">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div>
+                        <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">Cuidado Completo para seu Melhor Amigo</h1>
+                        <p class="text-lg sm:text-xl text-white/90 mb-8 max-w-xl">PetPass é sua carteira de vacinação digital. Gerencie pets, vacinas, lembretes e histórico de saúde em um só lugar.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#funcionalidades" class="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-200" role="button">
+                                <i class="fas fa-info-circle mr-2"></i>Saiba Mais
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. CAROUSEL - Image gallery with navigation -->
+        <section id="funcionalidades" class="py-20 bg-petpass-50" aria-labelledby="carousel-title">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 id="carousel-title" class="text-3xl sm:text-4xl font-bold text-petpass-800 mb-4">Funcionalidades Principais</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Tudo que você precisa para cuidar da saúde do seu pet</p>
+                </div>
+
+                <!-- Carousel Container -->
+                <div class="relative" id="featuresCarousel" role="region" aria-label="Carrossel de funcionalidades">
+                    <!-- Carousel Track -->
+                    <div class="overflow-hidden rounded-2xl shadow-lg">
+                        <div id="carouselTrack" class="flex transition-transform duration-500 ease-out">
+                            <!-- Slide 1 -->
+                            <div class="w-full flex-shrink-0 flex md:flex-row">
+                                <div class="w-full md:w-1/2 relative">
+                                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&h=400&fit=crop" alt="Tutor cadastrando pet no aplicativo" class="w-full h-64 md:h-auto carousel-img" loading="lazy">
+                                </div>
+                                <div class="w-full md:w-1/2 bg-white p-6 md:p-10 flex flex-col justify-center">
+                                    <span class="bg-petpass-50 text-petpass-800 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-4 w-fit">Gestão de Pets</span>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-4">Cadastro Completo</h3>
+                                    <p class="text-gray-600 mb-6">Registre todos os dados do seu pet: espécie, raça, idade, peso, alergias e histórico médico. Suporte para múltiplos pets por tutor.</p>
+                                    <ul class="space-y-3">
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Espécie e raça</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Dados de saúde</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Fotos e documentos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Slide 2 -->
+                            <div class="w-full flex-shrink-0 flex md:flex-row-reverse">
+                                <div class="w-full md:w-1/2 relative">
+                                    <img src="https://images.unsplash.com/photo-1576678923435-5531085b82e7?w=800&h=400&fit=crop" alt="Carteira de vacinação digital no celular" class="w-full h-64 md:h-auto carousel-img" loading="lazy">
+                                </div>
+                                <div class="w-full md:w-1/2 bg-white p-6 md:p-10 flex flex-col justify-center">
+                                    <span class="bg-petpass-50 text-petpass-800 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-4 w-fit">Carteira Digital</span>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-4">Vacinação Organizada</h3>
+                                    <p class="text-gray-600 mb-6">Mantenha o calendário de vacinas sempre atualizado. Receba alertas automáticos antes do vencimento e visualize o status de cada dose.</p>
+                                    <ul class="space-y-3">
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Calendário visual</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Lembretes automáticos</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Certificados PDF</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Slide 3 -->
+                            <div class="w-full flex-shrink-0 flex md:flex-row">
+                                <div class="w-full md:w-1/2 relative">
+                                    <img src="https://images.unsplash.com/photo-1548407260-da850faa41e3?w=800&h=400&fit=crop" alt="Veterinário consultando histórico do pet" class="w-full h-64 md:h-auto carousel-img" loading="lazy">
+                                </div>
+                                <div class="w-full md:w-1/2 bg-white p-6 md:p-10 flex flex-col justify-center">
+                                    <span class="bg-petpass-50 text-petpass-800 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-4 w-fit">Compartilhamento</span>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-4">Acesso Veterinário</h3>
+                                    <p class="text-gray-600 mb-6">Compartilhe o histórico completo com veterinários de forma segura. Gere links temporários ou QR codes para consultas presenciais.</p>
+                                    <ul class="space-y-3">
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Links seguros</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>QR Code para clínicas</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Controle de permissões</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Slide 4 -->
+                            <div class="w-full flex-shrink-0 flex md:flex-row-reverse">
+                                <div class="w-full md:w-1/2 relative">
+                                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&h=400&fit=crop" alt="Notificações de lembrete de vacina no celular" class="w-full h-64 md:h-auto carousel-img" loading="lazy">
+                                </div>
+                                <div class="w-full md:w-1/2 bg-white p-6 md:p-10 flex flex-col justify-center">
+                                    <span class="bg-petpass-50 text-petpass-800 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-4 w-fit">Notificações</span>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-4">Lembretes Inteligentes</h3>
+                                    <p class="text-gray-600 mb-6">Nunca mais esqueça uma vacina. Configure notificações por push, email ou SMS com antecedência personalizada para cada tipo de vacina.</p>
+                                    <ul class="space-y-3">
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Push, email e SMS</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Antecedência personalizada</li>
+                                        <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-petpass-600 mr-3"></i>Confirmação de aplicação</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Controls -->
+                    <button id="prevBtn" type="button" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors md:p-4" aria-label="Anterior">
+                        <i class="fas fa-chevron-left text-xl"></i>
+                    </button>
+                    <button id="nextBtn" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors md:p-4" aria-label="Próximo">
+                        <i class="fas fa-chevron-right text-xl"></i>
+                    </button>
+
+                    <!-- Carousel Indicators -->
+                    <div class="flex justify-center gap-2 mt-6" role="tablist" aria-label="Indicadores do carrossel">
+                        <button class="w-3 h-3 rounded-full bg-petpass-300 hover:bg-petpass-500 transition-colors" role="tab" aria-selected="true" aria-label="Slide 1" data-slide="0"></button>
+                        <button class="w-3 h-3 rounded-full bg-petpass-300 hover:bg-petpass-500 transition-colors" role="tab" aria-selected="false" aria-label="Slide 2" data-slide="1"></button>
+                        <button class="w-3 h-3 rounded-full bg-petpass-300 hover:bg-petpass-500 transition-colors" role="tab" aria-selected="false" aria-label="Slide 3" data-slide="2"></button>
+                        <button class="w-3 h-3 rounded-full bg-petpass-300 hover:bg-petpass-500 transition-colors" role="tab" aria-selected="false" aria-label="Slide 4" data-slide="3"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CARDS - Structured content components -->
+        <section id="vacinas" class="py-20" aria-labelledby="cards-title">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 id="cards-title" class="text-3xl sm:text-4xl font-bold text-petpass-800 mb-4">Vacinas Disponíveis</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Principais vacinas para cães e gatos no calendário PetPass</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Card 1 -->
+                    <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden" aria-labelledby="vaccine1-title">
+                        <div class="p-6 text-center">
+                            <div class="bg-red-100 text-red-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-2xl"></i>
+                            </div>
+                            <h3 id="vaccine1-title" class="text-lg font-bold text-gray-900 mb-2">V8 / V10</h3>
+                            <p class="text-gray-500 text-sm mb-4">Proteção contra cinomose, hepatite, parvovirose, leptospirose e mais.</p>
+                            <span class="bg-red-100 text-red-700 text-xs font-medium px-3 py-1 rounded-full">Cães</span>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                            <div class="flex justify-between text-gray-500 text-sm">
+                                <span><i class="fas fa-calendar-alt mr-1"></i>Anual</span>
+                                <span><i class="fas fa-syringe mr-1"></i>3 doses</span>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Card 2 -->
+                    <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden" aria-labelledby="vaccine2-title">
+                        <div class="p-6 text-center">
+                            <div class="bg-red-100 text-red-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-2xl"></i>
+                            </div>
+                            <h3 id="vaccine2-title" class="text-lg font-bold text-gray-900 mb-2">Raiva</h3>
+                            <p class="text-gray-500 text-sm mb-4">Obrigatória por lei. Proteção contra o vírus da raiva transmitido por mordidas.</p>
+                            <span class="bg-red-100 text-red-700 text-xs font-medium px-3 py-1 rounded-full">Cães e Gatos</span>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                            <div class="flex justify-between text-gray-500 text-sm">
+                                <span><i class="fas fa-calendar-alt mr-1"></i>Anual</span>
+                                <span><i class="fas fa-syringe mr-1"></i>1 dose</span>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Card 3 -->
+                    <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden" aria-labelledby="vaccine3-title">
+                        <div class="p-6 text-center">
+                            <div class="bg-blue-100 text-blue-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-2xl"></i>
+                            </div>
+                            <h3 id="vaccine3-title" class="text-lg font-bold text-gray-900 mb-2">Tríplice Felina</h3>
+                            <p class="text-gray-500 text-sm mb-4">Proteção contra rinotraqueíte, calicivirose e panleucopenia felina.</p>
+                            <span class="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">Gatos</span>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                            <div class="flex justify-between text-gray-500 text-sm">
+                                <span><i class="fas fa-calendar-alt mr-1"></i>Anual</span>
+                                <span><i class="fas fa-syringe mr-1"></i>3 doses</span>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Card 4 -->
+                    <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden" aria-labelledby="vaccine4-title">
+                        <div class="p-6 text-center">
+                            <div class="bg-yellow-100 text-yellow-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-2xl"></i>
+                            </div>
+                            <h3 id="vaccine4-title" class="text-lg font-bold text-gray-900 mb-2">Leishmaniose</h3>
+                            <p class="text-gray-500 text-sm mb-4">Prevenção da leishmaniose visceral canina, doença transmitida por mosquito.</p>
+                            <span class="bg-yellow-100 text-yellow-700 text-xs font-medium px-3 py-1 rounded-full">Cães</span>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                            <div class="flex justify-between text-gray-500 text-sm">
+                                <span><i class="fas fa-calendar-alt mr-1"></i>Anual</span>
+                                <span><i class="fas fa-syringe mr-1"></i>3 doses</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TABLE - Tabular data presentation -->
+        <section class="py-20 bg-petpass-50" aria-labelledby="table-title">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 id="table-title" class="text-3xl sm:text-4xl font-bold text-petpass-800 mb-4">Calendário Vacinal Sugerido</h2>
+                    <p class="text-lg text-gray-600">Referência para filhotes - consulte sempre seu veterinário</p>
+                </div>
+                <div class="overflow-x-auto rounded-2xl shadow-sm bg-white">
+                    <table class="w-full" aria-describedby="table-desc">
+                        <caption id="table-desc" class="sr-only">Tabela de calendário vacinal para cães e gatos com idade, vacina e observações</caption>
+                        <thead class="bg-petpass-800 text-white">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 text-left text-sm font-semibold">Idade</th>
+                                <th scope="col" class="px-6 py-4 text-left text-sm font-semibold">Vacina (Cães)</th>
+                                <th scope="col" class="px-6 py-4 text-left text-sm font-semibold">Vacina (Gatos)</th>
+                                <th scope="col" class="px-6 py-4 text-left text-sm font-semibold">Observações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-petpass-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-gray-900">45-60 dias</td>
+                                <td class="px-6 py-4 text-gray-700">V8/V10 - 1ª dose</td>
+                                <td class="px-6 py-4 text-gray-700">Tríplice Felina - 1ª dose</td>
+                                <td class="px-6 py-4 text-gray-600">Primeira vacinação dos filhotes</td>
+                            </tr>
+                            <tr class="hover:bg-petpass-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-gray-900">60-75 dias</td>
+                                <td class="px-6 py-4 text-gray-700">V8/V10 - 2ª dose</td>
+                                <td class="px-6 py-4 text-gray-700">Tríplice Felina - 2ª dose</td>
+                                <td class="px-6 py-4 text-gray-600">Reforço obrigatório (21-30 dias)</td>
+                            </tr>
+                            <tr class="hover:bg-petpass-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-gray-900">75-90 dias</td>
+                                <td class="px-6 py-4 text-gray-700">V8/V10 - 3ª dose + Raiva</td>
+                                <td class="px-6 py-4 text-gray-700">Tríplice Felina - 3ª dose + Raiva</td>
+                                <td class="px-6 py-4 text-gray-600">Finalização do protocolo inicial</td>
+                            </tr>
+                            <tr class="hover:bg-petpass-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-gray-900">6 meses</td>
+                                <td class="px-6 py-4 text-gray-700">Leishmaniose - 1ª dose</td>
+                                <td class="px-6 py-4 text-gray-700">-</td>
+                                <td class="px-6 py-4 text-gray-600">Opcional para cães (regiões endêmicas)</td>
+                            </tr>
+                            <tr class="hover:bg-petpass-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-gray-900">12 meses</td>
+                                <td class="px-6 py-4 text-gray-700">Reforço Anual (V8/V10, Raiva)</td>
+                                <td class="px-6 py-4 text-gray-700">Reforço Anual (Tríplice, Raiva)</td>
+                                <td class="px-6 py-4 text-gray-600">Primeiro reforço anual completo</td>
+                            </tr>
+                            <tr class="bg-gray-50 hover:bg-petpass-50/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-gray-900">Anualmente</td>
+                                <td class="px-6 py-4 text-gray-700">V8/V10 + Raiva (+ Leishmaniose)</td>
+                                <td class="px-6 py-4 text-gray-700">Tríplice Felina + Raiva</td>
+                                <td class="px-6 py-4 text-gray-600">Manutenção da imunidade vitalícia</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-gray-500 text-sm text-center mt-4"><i class="fas fa-info-circle mr-1"></i> O calendário pode variar conforme região e recomendação veterinária.</p>
+            </div>
+        </section>
+
+        <!-- 6. MODAL - Overlay dialog -->
+        <section id="contato" class="py-20 bg-petpass-50" aria-labelledby="contact-title">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 id="contact-title" class="text-3xl sm:text-4xl font-bold text-petpass-800 mb-4">Ficou com Dúvidas?</h2>
+                    <p class="text-lg text-gray-600 mb-10">Entre em contato conosco. Nossa equipe está pronta para ajudar você e seu pet!</p>
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button type="button" id="openContactModal" class="bg-petpass-800 hover:bg-petpass-900 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors flex items-center gap-2" aria-label="Abrir formulário de contato">
+                            <i class="fas fa-envelope"></i>Enviar Mensagem
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Modal -->
+        <div id="contactModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-labelledby="contactModalLabel" aria-modal="true">
+            <div class="modal-overlay absolute inset-0 bg-black/50" aria-hidden="true"></div>
+            <div class="relative max-w-2xl mx-auto mt-20">
+                <div class="modal-content bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-petpass-800 text-white px-6 py-4 rounded-t-2xl flex items-center justify-between">
+                        <h3 class="text-xl font-bold" id="contactModalLabel"><i class="fas fa-envelope mr-2"></i>Fale Conosco</h3>
+                        <button type="button" id="closeContactModal" class="text-white/80 hover:text-white transition-colors p-1" aria-label="Fechar">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 md:p-10">
+                        <form id="contactForm" class="space-y-6" novalidate aria-label="Formulário de contato">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="contactName" class="block text-sm font-semibold text-gray-700 mb-2">Seu Nome <span class="text-red-500" aria-hidden="true">*</span></label>
+                                    <input type="text" id="contactName" name="contactName" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-petpass-500 focus:border-transparent transition-all" required aria-required="true">
+                                    <p class="mt-1 text-sm text-red-500 hidden" aria-live="polite">Informe seu nome.</p>
+                                </div>
+                                <div>
+                                    <label for="contactEmail" class="block text-sm font-semibold text-gray-700 mb-2">E-mail <span class="text-red-500" aria-hidden="true">*</span></label>
+                                    <input type="email" id="contactEmail" name="contactEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-petpass-500 focus:border-transparent transition-all" required aria-required="true">
+                                    <p class="mt-1 text-sm text-red-500 hidden" aria-live="polite">Informe um e-mail válido.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="contactSubject" class="block text-sm font-semibold text-gray-700 mb-2">Assunto <span class="text-red-500" aria-hidden="true">*</span></label>
+                                <select id="contactSubject" name="contactSubject" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-petpass-500 focus:border-transparent transition-all appearance-none bg-white" required aria-required="true">
+                                    <option value="" selected disabled>Selecione o assunto</option>
+                                    <option value="duvida">Dúvida sobre o app</option>
+                                    <option value="suporte">Suporte técnico</option>
+                                    <option value="parceria">Parceria veterinária</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                                <p class="mt-1 text-sm text-red-500 hidden" aria-live="polite">Selecione um assunto.</p>
+                            </div>
+                            <div>
+                                <label for="contactMessage" class="block text-sm font-semibold text-gray-700 mb-2">Mensagem <span class="text-red-500" aria-hidden="true">*</span></label>
+                                <textarea id="contactMessage" name="contactMessage" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-petpass-500 focus:border-transparent transition-all resize-none" required aria-required="true" placeholder="Descreva sua dúvida ou sugestão..."></textarea>
+                                <p class="mt-1 text-sm text-red-500 hidden" aria-live="polite">Escreva sua mensagem.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-4 justify-end pt-4">
+                                <button type="button" id="cancelContactModal" class="border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:bg-gray-50 font-semibold px-6 py-3 rounded-lg transition-all" aria-label="Cancelar">
+                                    <i class="fas fa-times mr-2"></i>Cancelar
+                                </button>
+                                <button type="submit" class="bg-petpass-800 hover:bg-petpass-900 text-white font-semibold px-8 py-3 rounded-lg flex items-center gap-2" aria-label="Enviar mensagem">
+                                    <i class="fas fa-paper-plane"></i>Enviar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Modal -->
+        <div id="demoModal" class="fixed inset-0 z-50 hidden" role="dialog" aria-labelledby="demoModalLabel" aria-modal="true">
+            <div class="modal-overlay absolute inset-0 bg-black/50" aria-hidden="true"></div>
+            <div class="relative max-w-5xl mx-auto mt-10 mb-10">
+                <div class="modal-content bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-petpass-800 text-white px-6 py-4 rounded-t-2xl flex items-center justify-between">
+                        <h3 class="text-xl font-bold" id="demoModalLabel"><i class="fas fa-play-circle mr-2"></i>Demonstração do PetPass</h3>
+                        <button type="button" id="closeDemoModal" class="text-white/80 hover:text-white transition-colors p-1" aria-label="Fechar">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="p-0">
+                        <div class="aspect-video bg-gray-900 relative">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                                <i class="fas fa-play-circle text-8xl mb-4 text-white/80 hover:text-white transition-colors cursor-pointer"></i>
+                                <p class="text-center px-4 text-white/60">Vídeo de demonstração do PetPass<br><span class="text-sm">Integração com YouTube/Vimeo aqui</span></p>
+                            </div>
+                        </div>
+                        <div class="p-6 md:p-10">
+                            <h4 class="text-lg font-bold text-gray-900 mb-6">Principais Telas do App</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                                    <div class="bg-green-100 p-6 text-center">
+                                        <i class="fas fa-mobile-alt text-4xl text-green-600"></i>
+                                    </div>
+                                    <div class="p-4 text-center">
+                                        <h6 class="font-bold text-gray-900 mb-1">Dashboard</h6>
+                                        <small class="text-gray-500">Visão geral dos pets</small>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                                    <div class="bg-blue-100 p-6 text-center">
+                                        <i class="fas fa-mobile-alt text-4xl text-blue-600"></i>
+                                    </div>
+                                    <div class="p-4 text-center">
+                                        <h6 class="font-bold text-gray-900 mb-1">Carteira</h6>
+                                        <small class="text-gray-500">Vacinas e doses</small>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                                    <div class="bg-yellow-100 p-6 text-center">
+                                        <i class="fas fa-mobile-alt text-4xl text-yellow-600"></i>
+                                    </div>
+                                    <div class="p-4 text-center">
+                                        <h6 class="font-bold text-gray-900 mb-1">Lembretes</h6>
+                                        <small class="text-gray-500">Próximas vacinas</small>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                                    <div class="bg-indigo-100 p-6 text-center">
+                                        <i class="fas fa-mobile-alt text-4xl text-indigo-600"></i>
+                                    </div>
+                                    <div class="p-4 text-center">
+                                        <h6 class="font-bold text-gray-900 mb-1">Perfil</h6>
+                                        <small class="text-gray-500">Dados e configurações</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-wrap gap-4 justify-end">
+                        <button type="button" id="closeDemoModalFooter" class="border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:bg-gray-50 font-semibold px-6 py-3 rounded-lg transition-all" aria-label="Fechar demonstração">
+                            <i class="fas fa-times mr-2"></i>Fechar
+                        </button>
+                        <a href="#cadastro" class="bg-petpass-800 hover:bg-petpass-900 text-white font-semibold px-8 py-3 rounded-lg flex items-center gap-2" aria-label="Começar agora">
+                            <i class="fas fa-rocket"></i>Começar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-16" role="contentinfo" aria-label="Rodapé">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 mb-12">
+                <div class="text-center">
+                    <a href="#" class="flex items-center gap-2 text-white font-bold text-2xl mb-4 justify-center" aria-label="PetPass - Página inicial">
+                        <i class="fas fa-heart-pulse text-3xl text-green-400"></i>
+                        <span>PetPass</span>
+                    </a>
+                    <p class="text-gray-400 text-sm leading-relaxed">Carteira de vacinação digital para pets. Cuidado completo na palma da sua mão.</p>
+                </div>
+            </div>
+            <hr class="border-gray-800 mb-8">
+            <div class="flex flex-col items-center justify-center gap-2 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2026 PetPass. Todos os direitos reservados.</p>
+                <p class="text-gray-400 text-sm">Desenvolvido com <i class="fas fa-heart text-red-500"></i> para pets e tutores</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JS for all interactions -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        let isMenuOpen = false;
+
+        function toggleMobileMenu() {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', isMenuOpen);
+        }
+
+        function closeMobileMenu() {
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        mobileMenuBtn?.addEventListener('click', toggleMobileMenu);
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && isMenuOpen) {
+                closeMobileMenu();
+            }
+        });
+
+        let currentSlide = 0;
+        const totalSlides = 4;
+        const carouselTrack = document.getElementById('carouselTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicators = document.querySelectorAll('#featuresCarousel [role="tab"]');
+        let autoSlideInterval;
+
+        function updateCarousel() {
+            if (carouselTrack) {
+                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+            indicators.forEach((indicator, index) => {
+                indicator.setAttribute('aria-selected', index === currentSlide);
+                if (index === currentSlide) {
+                    indicator.classList.remove('bg-petpass-300');
+                    indicator.classList.add('bg-petpass-600');
+                } else {
+                    indicator.classList.remove('bg-petpass-600');
+                    indicator.classList.add('bg-petpass-300');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        prevBtn?.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
+        nextBtn?.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => goToSlide(index));
+        });
+
+        const carouselContainer = document.getElementById('featuresCarousel');
+        carouselContainer?.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+        carouselContainer?.addEventListener('mouseleave', startAutoSlide);
+
+        carouselContainer?.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') { prevSlide(); resetAutoSlide(); }
+            if (e.key === 'ArrowRight') { nextSlide(); resetAutoSlide(); }
+        });
+
+        startAutoSlide();
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                const focusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable) focusable.focus();
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.getElementById('openContactModal')?.addEventListener('click', () => openModal('contactModal'));
+        document.getElementById('closeContactModal')?.addEventListener('click', () => closeModal('contactModal'));
+        document.getElementById('cancelContactModal')?.addEventListener('click', () => closeModal('contactModal'));
+
+        document.getElementById('openDemoModal')?.addEventListener('click', () => openModal('demoModal'));
+        document.getElementById('closeDemoModal')?.addEventListener('click', () => closeModal('demoModal'));
+        document.getElementById('closeDemoModalFooter')?.addEventListener('click', () => closeModal('demoModal'));
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    const modal = overlay.closest('[role="dialog"]');
+                    if (modal) closeModal(modal.id);
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('[role="dialog"]:not(.hidden)').forEach(modal => {
+                    closeModal(modal.id);
+                });
+            }
+        });
+
+        function validateForm(form) {
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+
+            requiredFields.forEach(field => {
+                const errorMsg = field.parentElement.querySelector('.text-red-500');
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('input-error');
+                    field.classList.remove('input-valid');
+                    if (errorMsg) errorMsg.classList.remove('hidden');
+                } else {
+                    field.classList.remove('input-error');
+                    field.classList.add('input-valid');
+                    if (errorMsg) errorMsg.classList.add('hidden');
+                }
+            });
+
+            const emailField = form.querySelector('input[type="email"]');
+            if (emailField && emailField.value.trim()) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const errorMsg = emailField.parentElement.querySelector('.text-red-500');
+                if (!emailRegex.test(emailField.value)) {
+                    isValid = false;
+                    emailField.classList.add('input-error');
+                    emailField.classList.remove('input-valid');
+                    if (errorMsg) {
+                        errorMsg.textContent = 'Informe um e-mail válido.';
+                        errorMsg.classList.remove('hidden');
+                    }
+                }
+            }
+
+            const checkbox = form.querySelector('input[type="checkbox"][required]');
+            if (checkbox && !checkbox.checked) {
+                isValid = false;
+                const errorMsg = checkbox.parentElement.querySelector('.text-red-500');
+                if (errorMsg) errorMsg.classList.remove('hidden');
+            } else if (checkbox) {
+                const errorMsg = checkbox.parentElement.querySelector('.text-red-500');
+                if (errorMsg) errorMsg.classList.add('hidden');
+            }
+
+            return isValid;
+        }
+
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('blur', () => {
+                const form = field.closest('form');
+                if (form) {
+                    const errorMsg = field.parentElement.querySelector('.text-red-500');
+                    if (field.hasAttribute('required') && !field.value.trim()) {
+                        field.classList.add('input-error');
+                        field.classList.remove('input-valid');
+                        if (errorMsg) errorMsg.classList.remove('hidden');
+                    } else if (field.value.trim()) {
+                        field.classList.remove('input-error');
+                        field.classList.add('input-valid');
+                        if (errorMsg) errorMsg.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        const petForm = document.getElementById('petForm');
+        petForm?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateForm(petForm)) {
+                alert('Pet cadastrado com sucesso! (Demo - dados não salvos)');
+                petForm.reset();
+                petForm.querySelectorAll('.input-error, .input-valid').forEach(el => {
+                    el.classList.remove('input-error', 'input-valid');
+                });
+                petForm.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+            }
+        });
+
+        const contactForm = document.getElementById('contactForm');
+        contactForm?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateForm(contactForm)) {
+                alert('Mensagem enviada com sucesso! (Demo - não enviado)');
+                contactForm.reset();
+                contactForm.querySelectorAll('.input-error, .input-valid').forEach(el => {
+                    el.classList.remove('input-error', 'input-valid');
+                });
+                contactForm.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+                closeModal('contactModal');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    const navbar = document.querySelector('nav');
+                    const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+        function updateActiveNav() {
+            const scrollPos = window.scrollY + 100;
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                if (scrollPos >= top && scrollPos < top + height) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('text-petpass-100', 'font-semibold');
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.classList.add('text-petpass-100', 'font-semibold');
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+    </script>
+</body>
+</html>

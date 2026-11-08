@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPass - Carteira de Vacinação Digital para Pets">
+    <title>PetPass - Sua Carteira de Vacinação Digital</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .petpass-primary { background-color: #2E7D32; }
+        .petpass-primary:hover { background-color: #1B5E20; }
+        .petpass-text-primary { color: #2E7D32; }
+        .petpass-bg-light { background-color: #E8F5E9; }
+        .hero-gradient { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .carousel-img { height: 400px; object-fit: cover; }
+        @media (max-width: 768px) {
+            .carousel-img { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark petpass-primary fixed-top shadow-sm" aria-label="Navegação principal">
+            <div class="container">
+                <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" aria-label="PetPass - Página inicial">
+                    <i class="bi bi-heart-pulse-fill fs-3"></i>
+                    <span>PetPass</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#inicio">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#funcionalidades">Funcionalidades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#vacinas">Vacinas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#depoimentos">Depoimentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contato">Contato</a>
+                        </li>
+                                            </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="inicio" class="hero-gradient text-white py-5 pt-lg-0" aria-labelledby="hero-title">
+            <div class="container py-5 py-lg-6">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h1 id="hero-title" class="display-4 fw-bold mb-3">Cuidado Completo para seu Melhor Amigo</h1>
+                        <p class="lead mb-4">PetPass é sua carteira de vacinação digital. Gerencie pets, vacinas, lembretes e histórico de saúde em um só lugar.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#funcionalidades" class="btn btn-outline-light btn-lg fw-semibold px-5" role="button">
+                                <i class="bi bi-info-circle me-2"></i>Saiba Mais
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. CAROUSEL - Image gallery with navigation -->
+        <section id="funcionalidades" class="py-5 bg-light" aria-labelledby="carousel-title">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 id="carousel-title" class="display-5 fw-bold petpass-text-primary">Funcionalidades Principais</h2>
+                    <p class="lead text-muted">Tudo que você precisa para cuidar da saúde do seu pet</p>
+                </div>
+
+                <div id="featuresCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" aria-label="Carrossel de funcionalidades">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#featuresCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    </div>
+                    <div class="carousel-inner rounded-4 shadow-sm">
+                        <div class="carousel-item active">
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&h=400&fit=crop" class="d-block w-100 carousel-img" alt="Tutor cadastrando pet no aplicativo" loading="lazy">
+                                </div>
+                                <div class="col-md-6 d-flex flex-column justify-content-center p-4 p-md-5 bg-white">
+                                    <div class="badge petpass-bg-light petpass-text-primary mb-3" style="width: fit-content;">Gestão de Pets</div>
+                                    <h3 class="h4 fw-bold mb-3">Cadastro Completo</h3>
+                                    <p class="text-muted mb-4">Registre todos os dados do seu pet: espécie, raça, idade, peso, alergias e histórico médico. Suporte para múltiplos pets por tutor.</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Espécie e raça</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Dados de saúde</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Fotos e documentos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row g-0">
+                                <div class="col-md-6 order-md-2">
+                                    <img src="https://images.unsplash.com/photo-1576678923435-5531085b82e7?w=800&h=400&fit=crop" class="d-block w-100 carousel-img" alt="Carteira de vacinação digital no celular" loading="lazy">
+                                </div>
+                                <div class="col-md-6 d-flex flex-column justify-content-center p-4 p-md-5 bg-white">
+                                    <div class="badge petpass-bg-light petpass-text-primary mb-3" style="width: fit-content;">Carteira Digital</div>
+                                    <h3 class="h4 fw-bold mb-3">Vacinação Organizada</h3>
+                                    <p class="text-muted mb-4">Mantenha o calendário de vacinas sempre atualizado. Receba alertas automáticos antes do vencimento e visualize o status de cada dose.</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Calendário visual</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Lembretes automáticos</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Certificados PDF</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <img src="https://images.unsplash.com/photo-1548407260-da850faa41e3?w=800&h=400&fit=crop" class="d-block w-100 carousel-img" alt="Veterinário consultando histórico do pet" loading="lazy">
+                                </div>
+                                <div class="col-md-6 d-flex flex-column justify-content-center p-4 p-md-5 bg-white">
+                                    <div class="badge petpass-bg-light petpass-text-primary mb-3" style="width: fit-content;">Compartilhamento</div>
+                                    <h3 class="h4 fw-bold mb-3">Acesso Veterinário</h3>
+                                    <p class="text-muted mb-4">Compartilhe o histórico completo com veterinários de forma segura. Gere links temporários ou QR codes para consultas presenciais.</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Links seguros</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>QR Code para clínicas</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Controle de permissões</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row g-0">
+                                <div class="col-md-6 order-md-2">
+                                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&h=400&fit=crop" class="d-block w-100 carousel-img" alt="Notificações de lembrete de vacina no celular" loading="lazy">
+                                </div>
+                                <div class="col-md-6 d-flex flex-column justify-content-center p-4 p-md-5 bg-white">
+                                    <div class="badge petpass-bg-light petpass-text-primary mb-3" style="width: fit-content;">Notificações</div>
+                                    <h3 class="h4 fw-bold mb-3">Lembretes Inteligentes</h3>
+                                    <p class="text-muted mb-4">Nunca mais esqueça uma vacina. Configure notificações por push, email ou SMS com antecedência personalizada para cada tipo de vacina.</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Push, email e SMS</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Antecedência personalizada</li>
+                                        <li class="mb-2"><i class="bi bi-check-circle-fill petpass-text-primary me-2"></i>Confirmação de aplicação</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#featuresCarousel" data-bs-slide="prev" aria-label="Anterior">
+                        <span class="carousel-control-prev-icon bg-dark bg-opacity-50 rounded-circle p-3" style="width: 3rem; height: 3rem;"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#featuresCarousel" data-bs-slide="next" aria-label="Próximo">
+                        <span class="carousel-control-next-icon bg-dark bg-opacity-50 rounded-circle p-3" style="width: 3rem; height: 3rem;"></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CARDS - Structured content components -->
+        <section id="vacinas" class="py-5" aria-labelledby="cards-title">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 id="cards-title" class="display-5 fw-bold petpass-text-primary">Vacinas Disponíveis</h2>
+                    <p class="lead text-muted">Principais vacinas para cães e gatos no calendário PetPass</p>
+                </div>
+                <div class="row g-4">
+                    <!-- Card 1 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card h-100 border-0 shadow-sm card-hover transition-all" aria-labelledby="vaccine1-title">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                                    <i class="bi bi-shield-check fs-2"></i>
+                                </div>
+                                <h3 id="vaccine1-title" class="h5 fw-bold mb-2">V8 / V10</h3>
+                                <p class="text-muted small mb-3">Proteção contra cinomose, hepatite, parvovirose, leptospirose e mais.</p>
+                                <span class="badge bg-danger bg-opacity-10 text-danger">Cães</span>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0 pb-4 px-4">
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span><i class="bi bi-calendar3 me-1"></i>Anual</span>
+                                    <span><i class="bi bi-syringe me-1"></i>3 doses</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card h-100 border-0 shadow-sm card-hover transition-all" aria-labelledby="vaccine2-title">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                                    <i class="bi bi-shield-check fs-2"></i>
+                                </div>
+                                <h3 id="vaccine2-title" class="h5 fw-bold mb-2">Raiva</h3>
+                                <p class="text-muted small mb-3">Obrigatória por lei. Proteção contra o vírus da raiva transmitido por mordidas.</p>
+                                <span class="badge bg-danger bg-opacity-10 text-danger">Cães e Gatos</span>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0 pb-4 px-4">
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span><i class="bi bi-calendar3 me-1"></i>Anual</span>
+                                    <span><i class="bi bi-syringe me-1"></i>1 dose</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card h-100 border-0 shadow-sm card-hover transition-all" aria-labelledby="vaccine3-title">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                                    <i class="bi bi-shield-check fs-2"></i>
+                                </div>
+                                <h3 id="vaccine3-title" class="h5 fw-bold mb-2">Tríplice Felina</h3>
+                                <p class="text-muted small mb-3">Proteção contra rinotraqueíte, calicivirose e panleucopenia felina.</p>
+                                <span class="badge bg-primary bg-opacity-10 text-primary">Gatos</span>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0 pb-4 px-4">
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span><i class="bi bi-calendar3 me-1"></i>Anual</span>
+                                    <span><i class="bi bi-syringe me-1"></i>3 doses</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="card h-100 border-0 shadow-sm card-hover transition-all" aria-labelledby="vaccine4-title">
+                            <div class="card-body text-center p-4">
+                                <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+                                    <i class="bi bi-shield-check fs-2"></i>
+                                </div>
+                                <h3 id="vaccine4-title" class="h5 fw-bold mb-2">Leishmaniose</h3>
+                                <p class="text-muted small mb-3">Prevenção da leishmaniose visceral canina, doença transmitida por mosquito.</p>
+                                <span class="badge bg-warning bg-opacity-10 text-warning">Cães</span>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0 pb-4 px-4">
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span><i class="bi bi-calendar3 me-1"></i>Anual</span>
+                                    <span><i class="bi bi-syringe me-1"></i>3 doses</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TABLE - Tabular data presentation -->
+        <section class="py-5 bg-light" aria-labelledby="table-title">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 id="table-title" class="display-5 fw-bold petpass-text-primary">Calendário Vacinal Sugerido</h2>
+                    <p class="lead text-muted">Referência para filhotes - consulte sempre seu veterinário</p>
+                </div>
+                <div class="table-responsive shadow-sm rounded-4 overflow-hidden">
+                    <table class="table table-hover mb-0" aria-describedby="table-desc">
+                        <caption id="table-desc" class="visually-hidden">Tabela de calendário vacinal para cães e gatos com idade, vacina e observações</caption>
+                        <thead class="petpass-primary text-white">
+                            <tr>
+                                <th scope="col">Idade</th>
+                                <th scope="col">Vacina (Cães)</th>
+                                <th scope="col">Vacina (Gatos)</th>
+                                <th scope="col">Observações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold">45-60 dias</td>
+                                <td>V8/V10 - 1ª dose</td>
+                                <td>Tríplice Felina - 1ª dose</td>
+                                <td>Primeira vacinação dos filhotes</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">60-75 dias</td>
+                                <td>V8/V10 - 2ª dose</td>
+                                <td>Tríplice Felina - 2ª dose</td>
+                                <td>Reforço obrigatório (21-30 dias)</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">75-90 dias</td>
+                                <td>V8/V10 - 3ª dose + Raiva</td>
+                                <td>Tríplice Felina - 3ª dose + Raiva</td>
+                                <td>Finalização do protocolo inicial</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">6 meses</td>
+                                <td>Leishmaniose - 1ª dose</td>
+                                <td>-</td>
+                                <td>Opcional para cães (regiões endêmicas)</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">12 meses</td>
+                                <td>Reforço Anual (V8/V10, Raiva)</td>
+                                <td>Reforço Anual (Tríplice, Raiva)</td>
+                                <td>Primeiro reforço anual completo</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="fw-semibold">Anualmente</td>
+                                <td>V8/V10 + Raiva (+ Leishmaniose)</td>
+                                <td>Tríplice Felina + Raiva</td>
+                                <td>Manutenção da imunidade vitalícia</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-muted small text-center mt-3"><i class="bi bi-info-circle me-1"></i> O calendário pode variar conforme região e recomendação veterinária.</p>
+            </div>
+        </section>
+
+        <!-- 6. MODAL - Overlay dialog -->
+        <section id="contato" class="py-5 bg-light" aria-labelledby="contact-title">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8 text-center">
+                        <h2 id="contact-title" class="display-5 fw-bold petpass-text-primary mb-3">Ficou com Dúvidas?</h2>
+                        <p class="lead text-muted mb-5">Entre em contato conosco. Nossa equipe está pronta para ajudar você e seu pet!</p>
+                        <div class="d-flex flex-wrap gap-3 justify-content-center">
+                            <button type="button" class="btn btn-lg petpass-primary text-white fw-semibold px-5" data-bs-toggle="modal" data-bs-target="#contactModal" aria-label="Abrir formulário de contato">
+                                <i class="bi bi-envelope me-2"></i>Enviar Mensagem
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Modal -->
+        <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                    <div class="modal-header petpass-primary text-white border-0 rounded-top-4">
+                        <h3 class="modal-title fw-bold" id="contactModalLabel"><i class="bi bi-envelope me-2"></i>Fale Conosco</h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body p-4 p-md-5">
+                        <form id="contactForm" class="needs-validation" novalidate aria-label="Formulário de contato">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <label for="contactName" class="form-label fw-semibold">Seu Nome <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <input type="text" class="form-control form-control-lg" id="contactName" name="contactName" required aria-required="true">
+                                    <div class="invalid-feedback">Informe seu nome.</div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="contactEmail" class="form-label fw-semibold">E-mail <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <input type="email" class="form-control form-control-lg" id="contactEmail" name="contactEmail" required aria-required="true">
+                                    <div class="invalid-feedback">Informe um e-mail válido.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="contactSubject" class="form-label fw-semibold">Assunto <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <select class="form-select form-select-lg" id="contactSubject" name="contactSubject" required aria-required="true">
+                                        <option value="" selected disabled>Selecione o assunto</option>
+                                        <option value="duvida">Dúvida sobre o app</option>
+                                        <option value="suporte">Suporte técnico</option>
+                                        <option value="parceria">Parceria veterinária</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                    <div class="invalid-feedback">Selecione um assunto.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="contactMessage" class="form-label fw-semibold">Mensagem <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <textarea class="form-control form-control-lg" id="contactMessage" name="contactMessage" rows="5" required aria-required="true" placeholder="Descreva sua dúvida ou sugestão..."></textarea>
+                                    <div class="invalid-feedback">Escreva sua mensagem.</div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-3 justify-content-end mt-4">
+                                <button type="button" class="btn btn-lg btn-outline-secondary fw-semibold px-4" data-bs-dismiss="modal" aria-label="Cancelar">
+                                    <i class="bi bi-x me-2"></i>Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-lg petpass-primary text-white fw-semibold px-5" aria-label="Enviar mensagem">
+                                    <i class="bi bi-send me-2"></i>Enviar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Modal -->
+        <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                    <div class="modal-header petpass-primary text-white border-0 rounded-top-4">
+                        <h3 class="modal-title fw-bold" id="demoModalLabel"><i class="bi bi-play-circle me-2"></i>Demonstração do PetPass</h3>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="ratio ratio-16x9">
+                            <div class="bg-dark d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-play-circle-fill text-white fs-1 mb-3" style="font-size: 4rem;"></i>
+                                <p class="text-white-50 text-center px-4">Vídeo de demonstração do PetPass<br><small>Integração com YouTube/Vimeo aqui</small></p>
+                            </div>
+                        </div>
+                        <div class="p-4 p-md-5">
+                            <h4 class="fw-bold mb-3">Principais Telas do App</h4>
+                            <div class="row g-3">
+                                <div class="col-6 col-md-3">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="bg-success bg-opacity-10 p-4 text-center">
+                                            <i class="bi bi-phone-fill fs-1 text-success"></i>
+                                        </div>
+                                        <div class="card-body text-center p-3">
+                                            <h6 class="fw-bold mb-1">Dashboard</h6>
+                                            <small class="text-muted">Visão geral dos pets</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="bg-primary bg-opacity-10 p-4 text-center">
+                                            <i class="bi bi-phone-fill fs-1 text-primary"></i>
+                                        </div>
+                                        <div class="card-body text-center p-3">
+                                            <h6 class="fw-bold mb-1">Carteira</h6>
+                                            <small class="text-muted">Vacinas e doses</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="bg-warning bg-opacity-10 p-4 text-center">
+                                            <i class="bi bi-phone-fill fs-1 text-warning"></i>
+                                        </div>
+                                        <div class="card-body text-center p-3">
+                                            <h6 class="fw-bold mb-1">Lembretes</h6>
+                                            <small class="text-muted">Próximas vacinas</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="bg-info bg-opacity-10 p-4 text-center">
+                                            <i class="bi bi-phone-fill fs-1 text-info"></i>
+                                        </div>
+                                        <div class="card-body text-center p-3">
+                                            <h6 class="fw-bold mb-1">Perfil</h6>
+                                            <small class="text-muted">Dados e configurações</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 p-4">
+                        <button type="button" class="btn btn-lg btn-outline-secondary fw-semibold px-4" data-bs-dismiss="modal" aria-label="Fechar demonstração">
+                            <i class="bi bi-x me-2"></i>Fechar
+                        </button>
+                        <a href="#cadastro" class="btn btn-lg petpass-primary text-white fw-semibold px-5" data-bs-dismiss="modal" aria-label="Começar agora">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Começar Agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white py-5" role="contentinfo" aria-label="Rodapé">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <a href="#" class="d-flex align-items-center gap-2 text-white text-decoration-none mb-3" aria-label="PetPass - Página inicial">
+                        <i class="bi bi-heart-pulse-fill fs-2"></i>
+                        <span class="fw-bold fs-4">PetPass</span>
+                    </a>
+                    <p class="text-white-50 small mb-0">Carteira de vacinação digital para pets. Cuidado completo na palma da sua mão.</p>
+                </div>
+                <div class="col-12 text-center">
+                    <p class="text-white-50 small mb-0">&copy; 2026 PetPass. Todos os direitos reservados.</p>
+                    <p class="text-white-50 small mb-0">Desenvolvido com <i class="bi bi-heart-fill text-danger"></i> para pets e tutores</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfH" crossorigin="anonymous"></script>
+
+    <!-- Custom JS for form validation -->
+    <script>
+        (function () {
+            'use strict';
+
+            const petForm = document.getElementById('petForm');
+            if (petForm) {
+                petForm.addEventListener('submit', function (event) {
+                    if (!petForm.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    } else {
+                        event.preventDefault();
+                        alert('Pet cadastrado com sucesso! (Demo - dados não salvos)');
+                        petForm.reset();
+                        petForm.classList.remove('was-validated');
+                        return false;
+                    }
+                    petForm.classList.add('was-validated');
+                }, false);
+            }
+
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (event) {
+                    if (!contactForm.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    } else {
+                        event.preventDefault();
+                        alert('Mensagem enviada com sucesso! (Demo - não enviado)');
+                        contactForm.reset();
+                        contactForm.classList.remove('was-validated');
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+                        if (modal) modal.hide();
+                        return false;
+                    }
+                    contactForm.classList.add('was-validated');
+                }, false);
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
